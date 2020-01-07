@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('Question chooser'),
+            title: Text('Flutter Assignment'),
           ),
           body: Column(
             children: <Widget>[

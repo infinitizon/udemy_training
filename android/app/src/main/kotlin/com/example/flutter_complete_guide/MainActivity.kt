@@ -1,4 +1,4 @@
-package com.example.flutter_assignment
+package com.example.flutter_complete_guide
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

@@ -2,22 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTxn;
 
   Chart(this.recentTxn);
 
-  List<Map<String, Object>> get groupedTxnVal{
-    return List.generate(7, (index){
-      final weekDay = DateTime.now().subtract(Duration(days: index),);
+  List<Map<String, Object>> get groupedTxnVal {
+    return List.generate(7, (index) {
+      final weekDay = DateTime.now().subtract(
+        Duration(days: index),
+      );
       var totalSum = 0.0;
-      for(var i=0; i<recentTxn.length; i++){
-        if(recentTxn[i].date.day == weekDay.day && recentTxn[i].date.month == weekDay.month && recentTxn[i].date.year == weekDay.year) {
+      for (var i = 0; i < recentTxn.length; i++) {
+        if (recentTxn[i].date.day == weekDay.day &&
+            recentTxn[i].date.month == weekDay.month &&
+            recentTxn[i].date.year == weekDay.year) {
           totalSum += recentTxn[i].amount;
         }
       }
-      return {'day': DateFormat.E(weekDay), 'amount': totalSum};
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'amount': totalSum
+      };
+    }).reversed.toList();
+  }
+
+  double get _totalSpending {
+    return groupedTxnVal.fold(0.0, (sum, txn) {
+      return sum + txn['amount'];
     });
   }
 
@@ -26,8 +40,23 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: <Widget>[],
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTxnVal.map((txn) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                txn['day'],
+                txn['amount'],
+                _totalSpending == 0.0
+                    ? 0.0
+                    : ((txn['amount'] as double) / _totalSpending),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

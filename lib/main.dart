@@ -1,40 +1,35 @@
 import 'package:flutter/material.dart';
-
-import './TextControl.dart';
-import './TextOutput.dart';
+import 'package:meal_app/category_meals_screen.dart';
+import './category_screen.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  var _myText = 'Initial Text';
-  var _counter = 0;
-  void _changeText() {
-    setState(() {
-      _counter +=1;
-      _myText = 'Changed Text ' + _counter.toString();
-    });
-  }
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Question chooser'),
-          ),
-          body: Column(
-            children: <Widget>[
-              TextOutput(_myText),
-              TextControl(_changeText),
-            ],
-          )),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          primarySwatch: Colors.pink,
+          accentColor: Colors.amber,
+          canvasColor: Color.fromRGBO(255, 254, 229, 1),
+          fontFamily: 'Raleway',
+          textTheme: ThemeData.light().textTheme.copyWith(
+              body1: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              body2: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              title: TextStyle(
+                fontSize: 20,
+                fontFamily: 'RobotoCondensed',
+              ))),
+      home: CategoryScreen(),
+      routes: {
+        '/category-meal': (ctx) => CategoryMealsScreen(categoryId, categoryTitle)
+      },
     );
   }
 }

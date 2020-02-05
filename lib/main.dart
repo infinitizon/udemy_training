@@ -1,40 +1,30 @@
 import 'package:flutter/material.dart';
 
-import './TextControl.dart';
-import './TextOutput.dart';
-
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  var _myText = 'Initial Text';
-  var _counter = 0;
-  void _changeText() {
-    setState(() {
-      _counter +=1;
-      _myText = 'Changed Text ' + _counter.toString();
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Question chooser'),
-          ),
-          body: Column(
-            children: <Widget>[
-              TextOutput(_myText),
-              TextControl(_changeText),
-            ],
-          )),
+      title: 'MyShop',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MyShop'),
+      ),
+      body: Center(
+        child: Text('Let\'s build a shop!'),
+      ),
     );
   }
 }
